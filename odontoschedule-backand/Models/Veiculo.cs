@@ -18,9 +18,12 @@ namespace odontoschedule_backand.Models
         public string Placa { get; set; }
 
         [Required(ErrorMessage = "Obrigatorio informar o Ano de Fabricacao!")]
+        [Display(Name = "Ano de Fabricacao")]
+
         public  int AnoFabricacao { get; set; }
 
         [Required(ErrorMessage = "Obrigatorio informar o Ano do Modelo!")]
+        [Display(Name = "Ano do Modelo")]
         public  int AnoModelo { get; set; }
 
     }
