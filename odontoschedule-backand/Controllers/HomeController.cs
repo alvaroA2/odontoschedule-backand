@@ -15,7 +15,7 @@ namespace odontoschedule_backand.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Veiculos");
         }
 
         public IActionResult Privacy()

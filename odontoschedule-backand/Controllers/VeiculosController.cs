@@ -122,6 +122,30 @@ namespace odontoschedule_backand.Controllers
 
         }
 
+        public async Task<IActionResult> Relatorio(int? Id)
+        {
+            if (Id == null)
+                return NotFound();  
+            
+            var veiculo = await _context.Veiculos.FindAsync(Id);
+
+            if (veiculo == null)
+                return NotFound();
+
+            var consumos = await _context.Consumos
+                .Where(c => veiculo.Id == Id)
+                .OrderByDescending(c => c.Data)
+                .ToListAsync();
+
+            decimal total = consumos.Sum(c => c.Valor);
+
+            ViewBag.Veiculo = veiculo;
+            ViewBag.Total = total;
+
+            return View(consumos);
+
+        }
+
     }
 }
      
