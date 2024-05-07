@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using BCrypt.Net;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ using odontoschedule_backand.Models;
 
 namespace odontoschedule_backand.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class UsuariosController : Controller
     {
         private readonly AppDbContext _context;
@@ -28,12 +30,21 @@ namespace odontoschedule_backand.Controllers
             return View(await _context.Usuarios.ToListAsync());
         }
 
+        [AllowAnonymous]
+        public IActionResult AcessDenied()
+        {
+            return View();
+
+        }
+
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(Usuario usuario)
         {
             var dados = await _context.Usuarios
@@ -74,16 +85,15 @@ namespace odontoschedule_backand.Controllers
             }
 
 
-
-
             else
             {
                 ViewBag.Message = "Usuario e/ou senha invalidos!";
-
+                return View();
             }          
-            return View();
+            
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Logout()
         {
 

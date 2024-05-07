@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -6,6 +7,7 @@ using odontoschedule_backand.Models;
 
 namespace odontoschedule_backand.Controllers
 {
+    [Authorize]
     public class VeiculosController : Controller
     {
         private readonly AppDbContext _context;
@@ -26,6 +28,7 @@ namespace odontoschedule_backand.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create(Veiculo veiculo)
         {
             if (ModelState.IsValid)
